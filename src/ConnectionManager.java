@@ -14,6 +14,7 @@ public class ConnectionManager {
       this.con = (HttpURLConnection) url.openConnection();
       this.con.setConnectTimeout(5000);
       this.con.setReadTimeout(5000);
+      this.con.setRequestProperty("Accept-Charset", "UTF-8");
       this.con.setRequestProperty("Content-Type", "text/html");
       return (this.con.getResponseCode() == HttpURLConnection.HTTP_OK);
     } catch (java.net.SocketTimeoutException e) {
@@ -27,7 +28,9 @@ public class ConnectionManager {
 
   public String getContents() {
     try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+      InputStreamReader reader = new InputStreamReader(con.getInputStream());
+      System.out.println(String.format("Encoding: %s", reader.getEncoding()));
+      BufferedReader in = new BufferedReader(reader);
       String inputLine;
       StringBuffer content = new StringBuffer();
       while ((inputLine = in.readLine()) != null) {
