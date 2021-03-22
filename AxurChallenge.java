@@ -1,3 +1,5 @@
+import src.ConnectionManager;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -14,32 +16,33 @@ public class AxurChallenge {
             if (verifyURL(s)) {
                 System.out.println(String.format("%s looks like a URL", s));
                 URL url = new URL(s);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setConnectTimeout(5000);
-                con.setReadTimeout(5000);
-                con.setRequestProperty("Content-Type", "text/html");
-                int status = con.getResponseCode();
-                System.out.println(String.format("Got status %d", status));
-                BufferedReader in = new BufferedReader(
-                  new InputStreamReader(con.getInputStream()));
-                String inputLine;
-                StringBuffer content = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    String processedLine = inputLine.toLowerCase(); // canonize the input
-                    content.append(processedLine);
-                }
-                in.close();
-                con.disconnect();
-                // System.out.println(content);
-                for (String keyword : keywords) {
-                    if (content.indexOf(keyword) != -1 ? true : false) {
-                        System.out.println(String.format("Found keyword '%s'", keyword));
-                    }
+                String content = getPageContents(url);
+                if (checkKeywords(content, keywords)) {
+                    System.out.println("> suspicious");
                 }
             } else {
                 System.out.println(String.format("%s does not look like a URL", s));
             }
         }
+    }
+
+    private static boolean checkKeywords(String content,  String[] keywords) {
+        for (String keyword : keywords) {
+            if (content.indexOf(keyword) != -1 ? true : false) {
+                System.out.println(String.format("Found keyword '%s'", keyword));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String getPageContents(URL url) {
+        ConnectionManager manager = new ConnectionManager();
+        if (!manager.setupConnection(url)) {
+            System.out.println(String.format("Error getting contents from '%s'", url.toString()));
+        }
+
+        return manager.getContents();
     }
 
     private static boolean verifyURL(String url) {
