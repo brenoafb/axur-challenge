@@ -24,7 +24,6 @@ public class AxurChallenge {
                 System.out.println(String.format("%s looks like a URL", s));
                 URL url = new URL(s);
                 String content = getPageContents(url);
-                System.out.println(content);
                 if (checkKeywords(content, keywords)) {
                     System.out.println("> suspicious");
                 }
