@@ -12,7 +12,6 @@ public class URLManager {
       url = new URL(urlString);
       return Optional.of(url);
     } catch (MalformedURLException e) {
-      System.err.println(String.format("Error parsing url string: %s", urlString));
       return Optional.empty();
     }
   }
