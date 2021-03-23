@@ -18,10 +18,10 @@ public class ConnectionManager {
       this.con.setRequestProperty("Content-Type", "text/html");
       return (this.con.getResponseCode() == HttpURLConnection.HTTP_OK);
     } catch (java.net.SocketTimeoutException e) {
-      System.out.println("Timeout");
+      System.err.println("ConnectionManager: Timeout");
       return false;
     } catch (java.io.IOException e) {
-      System.out.println("IOException");
+      System.err.println("ConnectionManager: IOException");
       return false;
     }
   }
@@ -29,7 +29,7 @@ public class ConnectionManager {
   public String getContents() {
     try {
       InputStreamReader reader = new InputStreamReader(con.getInputStream());
-      System.out.println(String.format("Encoding: %s", reader.getEncoding()));
+      System.err.println(String.format("Encoding: %s", reader.getEncoding()));
       BufferedReader in = new BufferedReader(reader);
       String inputLine;
       StringBuffer content = new StringBuffer();
@@ -41,7 +41,7 @@ public class ConnectionManager {
       con.disconnect();
       return content.toString();
     } catch (IOException e) {
-      System.out.println("Error fetching page contents");
+      System.err.println("ConnectionManager: Error fetching page contents");
       return "";
     }
   }
