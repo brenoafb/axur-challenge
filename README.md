@@ -1,14 +1,18 @@
-## Getting Started
+# AxurChallenge - Engineering Intern
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+- Breno Fatureto - breno.afb@gmail.com
 
-## Folder Structure
+## Description
 
-The workspace contains two folders by default, where:
+This project detects suspicious keywords (specified in `keywords.txt`) in web pages.
+The user provides the URL of the page to be analyzed as a command-line argument.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Examples:
 
-## Dependency Management
-
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+```
+$ javac AxurChallenge.java
+$ java AxurChallenge http://www.mocky.io/v2/5e18df272f00007e0097e1b4
+suspicious
+$ java AxurChallenge http://www.google.com
+safe
+```
