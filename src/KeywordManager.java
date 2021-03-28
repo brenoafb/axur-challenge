@@ -33,7 +33,8 @@ public class KeywordManager {
   private List<String> readKeywords(String filename) throws IOException {
     List<String> keywordsList = new LinkedList<String>();
     Stream<String> stream = Files.lines(Paths.get(filename));
-    stream.forEach(keyword -> { keywordsList.add(keyword); } );
+    stream.filter(keyword -> keyword.length() > 0)
+          .forEach(keywordsList::add);
     return keywordsList;
   }
 }
