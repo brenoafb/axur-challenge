@@ -10,9 +10,11 @@ public class AxurChallenge {
   public static void main(String[] args) throws Exception {
     String keywordsFile = "keywords.txt";
     KeywordManager keywordManager = new KeywordManager(keywordsFile);
-    for (String s : args) {
-      verifyURL(s, keywordManager);
+    if (args.length != 1) {
+      System.err.println("Please provide exactly one URL to be analyzed");
+      return;
     }
+    verifyURL(args[0], keywordManager);
   }
 
   private static void verifyURL(String s, KeywordManager keywordManager) {
